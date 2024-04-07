@@ -4,13 +4,16 @@ package com.fahim.Ecommerce.controller;
 import com.fahim.Ecommerce.model.AppUser;
 import com.fahim.Ecommerce.model.Role;
 import com.fahim.Ecommerce.model.UserRole;
+import com.fahim.Ecommerce.repo.UserRepository;
 import com.fahim.Ecommerce.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +28,9 @@ public class UserController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
 
@@ -88,6 +94,21 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(user));
     }
 
+    @PostMapping("/change-password")
+    public ResponseEntity<String > changePassword(@RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Principal principal) {
+        String username = principal.getName();
+        AppUser currentUser = userService.getSingleUser(username);
+
+        if (passwordEncoder.matches(oldPassword,currentUser.getPassword()) && newPassword.equals(confirmPassword)) {
+            currentUser.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(currentUser);
+           return ResponseEntity.ok("Success");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password change failed");
+    }
     @GetMapping("/count")
     public long getContOfUsers() {
         return this.userService.getTotalUser();

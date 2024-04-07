@@ -18,6 +18,7 @@ public interface UserService {
 
     List<AppUser> getAllUsers();
 
+
     long getTotalUser();
 
 }

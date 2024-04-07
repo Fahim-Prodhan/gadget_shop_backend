@@ -140,15 +140,6 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
-    @Override
-    public Long getOrderCountForPlaced(String status) {
-        if (status.equals("Placed")){
-            Long aLong = this.orderRepository.countOrderDetailsByOrderStatus(status);
-            return aLong;
-        }
-        return null;
-    }
-
     private TransactionDetails prepareTransactionDetails(Order order){
         String orderId = order.get("id");
         String currency = order.get("currency");
@@ -157,6 +148,15 @@ public class OrderServiceImpl implements OrderService {
         TransactionDetails transactionDetails = new TransactionDetails(orderId,currency,amount,KEY);
         return transactionDetails;
 
+    }
+
+    @Override
+    public Long getOrderCountForPlaced(String status) {
+        if (status.equals("Placed")){
+            Long aLong = this.orderRepository.countOrderDetailsByOrderStatus(status);
+            return aLong;
+        }
+        return null;
     }
 
     @Override
