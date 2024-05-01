@@ -15,19 +15,19 @@
 #      ddl-auto: update
 #    show-sql: true
 
-server:
-  port: 8080
+# server:
+#   port: 8080
 
-spring:
-  datasource:
-    url: jdbc:postgresql://dpg-co8uoc4f7o1s738vucag-a.oregon-postgres.render.com:5432/gadgets_here
-    username: gadgets_here_user
-    password: GxyWXoQUnnnHL9dZKNEgFrEOiHPSeOLf
-    driver-class: com.cj.jdbc.Driver
-  jpa:
-    properties:
-      hibernate:
-        format_sql: true
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+# spring:
+#   datasource:
+#     url: jdbc:postgresql://dpg-co8uoc4f7o1s738vucag-a.oregon-postgres.render.com:5432/gadgets_here
+#     username: gadgets_here_user
+#     password: GxyWXoQUnnnHL9dZKNEgFrEOiHPSeOLf
+#     driver-class: com.cj.jdbc.Driver
+#   jpa:
+#     properties:
+#       hibernate:
+#         format_sql: true
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
